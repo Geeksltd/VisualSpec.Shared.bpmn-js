@@ -4,7 +4,7 @@ import BpmnModeler from '../bpmn-js/lib/Modeler';
 
 import diagramXML from './resources/newDiagram.bpmn';
 
-// console.writeline("123");
+console.log("123");
 console.log(diagramXML);
 
 var container = $('#js-drop-zone');

@@ -37,8 +37,9 @@ module.exports = {
     // liveReload: true,
   //server: "http",
   // host: "localhost",
-  port: "8081",
-  // hot: true,
+  port: "8080",
+  hot: true,
+  contentBase:path.join(__dirname,"dist")
   // open: true,
   // historyApiFallback: true,
   // inline: true,

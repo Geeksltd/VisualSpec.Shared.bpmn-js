@@ -5,27 +5,26 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "Launch Webpack",
             "type": "node",
             "request": "launch",
-            "program": "${workspaceFolder}/node_modules/webpack/bin/webpack.js",
+            "name": "Launch Node App",
+            "program": "${workspaceFolder}/node_modules/webpack-dev-server/bin/webpack-dev-server.js",
             "sourceMaps": true,
-        },
-        {
-            "name": "Launch Program",
-            "type": "node",
-            "request": "launch",
-            "skipFiles": ["<node_internals>/**"],
-            "program": "${workspaceFolder}\\dist\\bpmn.js",
-        },
-        {
-            "name": "Launch chrome",
+            "cwd":"${workspaceFolder}/dist",
+            "args": [
+                "--env.environment=development",
+            ],
+            "env":{
+                "environment":"development",
+                "NODE_ENV":"development"
+            }
+          },{
             "type": "chrome",
             "request": "launch",
-            "url": "http://localhost:8080",
-            "webRoot": "${workspaceFolder}/dist",
-            "sourceMaps": true,
-
-        }
+            "name": "Launch chrome",
+            "url":"http://localhost:8080",
+            "webRoot": "${workspaceFolder}",
+            "sourceMaps": true
+          }
     ]
 }
