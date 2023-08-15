@@ -24,26 +24,6 @@ module.exports = {
   mode: 'development',
   devtool: 'inline-source-map',
   devServer: {
-    // static: [
-    //   {
-    //     directory: path.join(__dirname, "dist"),
-    //     publicPath: "/dist",
-    //     watch: true,
-    //   },
-    // ],
-    // devMiddleware: {
-    //   writeToDisk: true,
-    // },
-    // liveReload: true,
-  //server: "http",
-  // host: "localhost",
-  port: "8080",
-  hot: true,
-  contentBase:path.join(__dirname,"dist")
-  // open: true,
-  // historyApiFallback: true,
-  // inline: true,
-  // publicPath: '/',
-    },
+  },
   
 };
