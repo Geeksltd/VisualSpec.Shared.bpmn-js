@@ -1,15 +1,21 @@
 {
   "name": "@Geeksltd/VisualSpec.Shared.bpmn-js",
-  "version": "0.0.0",
-  "description": "An app to develop bpmn-js",
-  "private": "true",
+  "version": "1.0.0",
+  "description": "bpmn-js module to create bpmn 2 diagram",
   "scripts": {
     "test": "echo \"Error: no test specified\"",
-    "clean": "rm -rf ./dist && mkdir ./dist",
+    "clean": "rm -rf ./public && mkdir ./public",
     "build": "webpack --config ./webpack.config.js --mode development --env development",
     "build-prod": "webpack --config ./webpack.production.config.js --mode production",
     "start": "webpack serve --config ./webpack.config.js --mode development --env development --progress"
   },
+  "files": [
+    "dist/**",
+    "src/**",
+    "package-lock.json",
+    "package.json",
+    "README.md"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/Geeksltd/VisualSpec.Shared.bpmn-js"
