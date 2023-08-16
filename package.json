@@ -58,5 +58,8 @@
     "diagram-js": "^7.2.3",
     "tiny-svg": "3.0.1",
     "min-dash": "4.1.1"
+  },
+  "publishConfig": {
+    "registry": "https://npm.pkg.github.com/Geeksltd/"
   }
 }
