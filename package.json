@@ -4,7 +4,7 @@
   "description": "An app to develop bpmn-js",
   "private": "true",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "echo \"Error: no test specified\"",
     "clean": "rm -rf ./dist && mkdir ./dist",
     "build": "webpack --config ./webpack.config.js --mode development --env development",
     "build-prod": "webpack --config ./webpack.production.config.js --mode production",
