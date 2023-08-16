@@ -7,7 +7,7 @@ module.exports = {
       },
     output: {
         path: __dirname + '/dist',
-        filename: 'bpmn.js',
+        filename: 'bpmn.development.js',
       },
   module: {
     rules: [{

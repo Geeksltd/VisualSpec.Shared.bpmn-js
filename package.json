@@ -1,17 +1,18 @@
 {
-  "name": "bpmn-js-example",
+  "name": "@Geeksltd/VisualSpec.Shared.bpmn-js",
   "version": "0.0.0",
   "description": "An app to develop bpmn-js",
   "private": "true",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf ./dist && mkdir ./dist",
-    "start": "webpack serve --config ./webpack.config.js --mode development --env development --progress",
-    "build": "webpack"
+    "build": "webpack --config ./webpack.config.js --mode development --env development",
+    "build-prod": "webpack --config ./webpack.production.config.js --mode production",
+    "start": "webpack serve --config ./webpack.config.js --mode development --env development --progress"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/bpmn-io/bpmn-js-examples"
+    "url": "https://github.com/Geeksltd/VisualSpec.Shared.bpmn-js"
   },
   "keywords": [
     "VisualSpec"

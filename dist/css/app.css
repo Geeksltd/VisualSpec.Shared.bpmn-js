@@ -57,12 +57,6 @@ a:link {
   display: none;
 }
 
-
-.content .canvas,
-.content.with-error .canvas {
-  visibility: hidden;
-}
-
 .content.with-diagram .canvas {
   visibility: visible;
 }
