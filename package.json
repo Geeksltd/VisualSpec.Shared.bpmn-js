@@ -1,5 +1,5 @@
 {
-  "name": "@Geeksltd/VisualSpec.Shared.bpmn-js",
+  "name": "@Geeksltd/visualSpec.shared.bpmn-js",
   "version": "1.0.0",
   "description": "bpmn-js module to create bpmn 2 diagram",
   "private": false,
