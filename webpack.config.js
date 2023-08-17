@@ -7,7 +7,7 @@ module.exports = {
       },
     output: {
         path: __dirname + '/public',
-        filename: 'bpmn.development.js',
+        filename: 'app.js',
       },
   module: {
     rules: [{

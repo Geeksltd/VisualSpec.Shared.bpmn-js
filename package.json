@@ -1,6 +1,6 @@
 {
   "name": "@Geeksltd/visualspec.shared.bpmn-js",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "bpmn-js module to create bpmn 2 diagram",
   "private": false,
   "scripts": {
@@ -8,7 +8,8 @@
     "clean": "rm -rf ./public && mkdir ./public",
     "build": "webpack --config ./webpack.config.js --mode development --env development",
     "build-prod": "webpack --config ./webpack.production.config.js --mode production",
-    "start": "webpack serve --config ./webpack.config.js --mode development --env development --progress"
+    "start": "webpack serve --config ./webpack.config.js --mode development --env development --progress",
+    "start-prod": "webpack serve --config ./webpack.production.config.js --mode production --env production --progress"
   },
   "files": [
     "dist/**",
@@ -52,12 +53,7 @@
     "webpack-dev-server": "^3.11.3"
   },
   "dependencies": {
-    "jquery": "^3.3.1",
-    "lodash": "^4.17.20",
-    "bpmn-js": "^8.2.2",
-    "diagram-js": "^7.2.3",
-    "tiny-svg": "3.0.1",
-    "min-dash": "4.1.1"
+    "bpmn-js": "^13.2.2"
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com/Geeksltd/"

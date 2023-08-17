@@ -19,15 +19,12 @@ export default class vsbpmn{
           });
           this.eventBus = this.modeler.get("eventBus");
           //List of all events
-          new ZoomModule(modeler,container).render();
+          new ZoomModule(this.modeler,element).render();
           if (xmlData)
-            modeler.importXML(xmlData).catch((err) => {
+            this.modeler.importXML(xmlData).catch((err) => {
             if (err) {
               console.error(err);
             }
           });
     }
-
-    
-
 }

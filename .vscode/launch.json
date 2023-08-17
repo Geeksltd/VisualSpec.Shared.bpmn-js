@@ -10,7 +10,7 @@
             "name": "Launch Node App",
             "program": "${workspaceFolder}/node_modules/webpack-dev-server/bin/webpack-dev-server.js",
             "sourceMaps": true,
-            "cwd":"${workspaceFolder}/dist",
+            "cwd":"${workspaceFolder}/sample",
             "args": [
                 "--env.environment=development",
             ],

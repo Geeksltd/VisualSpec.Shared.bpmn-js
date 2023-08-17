@@ -1,27 +1,25 @@
 const path = require('path');
-// const CopyWebpackPlugin = require('copy-webpack-plugin');
+const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
         bundle: [ './src/bpmn.js' ]
       },
     output: {
-        path: __dirname + '/dist',
+        path: path.join(__dirname, 'dist'),
         filename: 'bpmn.js',
+        libraryTarget: "umd"
       },
-  module: {
-    rules: [{
-        test: /\.bpmn$/,
-        use: 'raw-loader'
-      }]
+   mode: 'production',
+  plugins: [
+    new CopyWebpackPlugin([
+      { from: 'assets/**', to: 'vendor/bpmn-js', context: 'node_modules/bpmn-js/dist/' },
+      { from: '**/*.{html,css}', context: 'src/' }
+    ])
+  ],
+  optimization: {
+    minimize: true
   },
-  // plugins: [
-  //   new CopyWebpackPlugin([
-  //     { from: 'assets/**', to: 'vendor/bpmn-js', context: 'node_modules/bpmn-js/dist/' },
-  //     { from: '**/*.{html,css}', context: 'app/' }
-  //   ])
-  // ],
-  mode: 'production',
   devServer: {
   },
 };
