@@ -1,9 +1,7 @@
-import {
-    assign
-  } from 'min-dash';
-  
+  import { assign } from 'min-dash';
   import { getDi } from 'bpmn-js/lib/util/ModelUtil';
   import PaletteProvider from 'bpmn-js/lib/features/palette/PaletteProvider.js';
+  
   /**
    * @return {PaletteEntries}
    */
@@ -17,6 +15,7 @@ import {
         handTool = this._handTool,
         globalConnect = this._globalConnect,
         translate = this._translate;
+        let palette = this._palette;
   
     function createAction(type, group, className, title, options) {
   
@@ -67,9 +66,15 @@ import {
     }
   
     function createParticipant(event) {
-      create.start(event, elementFactory.createParticipantShape());
+     let arg = palette._eventBus.createEvent({
+        type:"commandStack.elements.create.canExecute",
+        context:{shape:{type:"bpmn:Participant"},elements:[event]}
+      });
+      let result = palette._eventBus.fire(arg);
+      if (result)
+        create.start(event, elementFactory.createParticipantShape());
     }
-  
+    
     assign(actions, {
       'hand-tool': {
         group: 'tools',
@@ -117,7 +122,7 @@ import {
       },
       'create.start-event': createAction(
         'bpmn:StartEvent', 'event', 'bpmn-icon-start-event-none',
-        translate('Create StartEvent')
+        translate('Create Start Point')
       ),
     //   'create.intermediate-event': createAction(
     //     'bpmn:IntermediateThrowEvent', 'event', 'bpmn-icon-intermediate-event-none',
@@ -125,47 +130,48 @@ import {
     //   ),
       'create.end-event': createAction(
         'bpmn:EndEvent', 'event', 'bpmn-icon-end-event-none',
-        translate('Create EndEvent')
+        translate('Create End Point')
       ),
       'create.exclusive-gateway': createAction(
         'bpmn:ExclusiveGateway', 'gateway', 'bpmn-icon-gateway-none',
-        translate('Create Gateway')
+        translate('Create Desicion Point')
       ),
       'create.task': createAction(
         'bpmn:Task', 'activity', 'bpmn-icon-task',
-        translate('Create Task')
+        translate('Create Step')
       ),
       'create.data-object': createAction(
         'bpmn:DataObjectReference', 'data-object', 'bpmn-icon-data-object',
-        translate('Create DataObjectReference')
+        translate('Create Artifact')
       ),
     //   'create.data-store': createAction(
     //     'bpmn:DataStoreReference', 'data-store', 'bpmn-icon-data-store',
     //     translate('Create DataStoreReference')
     //   ),
-      'create.subprocess-expanded': {
-        group: 'activity',
-        className: 'bpmn-icon-subprocess-expanded',
-        title: translate('Create expanded SubProcess'),
+      // 'create.subprocess-expanded': {
+      //   group: 'activity',
+      //   className: 'bpmn-icon-subprocess-expanded',
+      //   title: translate('Create expanded SubProcess'),
+      //   action: {
+      //     dragstart: createSubprocess,
+      //     click: createSubprocess
+      //   }
+      // }
+      // ,
+      'create.participant-expanded': {
+        group: 'collaboration',
+        className: 'bpmn-icon-participant',
+        title: translate('add Actor/Integration'),
         action: {
-          dragstart: createSubprocess,
-          click: createSubprocess
+          dragstart: createParticipant,
+          click: createParticipant
         }
       }
-      ,
-    //   'create.participant-expanded': {
-    //     group: 'collaboration',
-    //     className: 'bpmn-icon-participant',
-    //     title: translate('Create Pool/Participant'),
-    //     action: {
-    //       dragstart: createParticipant,
-    //       click: createParticipant
-    //     }
-    //   },
-    //   'create.group': createAction(
-    //     'bpmn:Group', 'artifact', 'bpmn-icon-group',
-    //     translate('Create Group')
-    //   ),
+      // ,
+      // 'create.group': createAction(
+      //   'bpmn:Group', 'artifact', 'bpmn-icon-group',
+      //   translate('Create Group')
+      // ),
     });
   
     return actions;

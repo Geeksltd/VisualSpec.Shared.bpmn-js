@@ -1,5 +1,5 @@
 
-export default class ZoomModule{
+export default class BpmnZoomModule{
     constructor(modeler,container,callBack){
         this.modeler = modeler;
         this.zoomScroll = this.modeler.get('zoomScroll');
@@ -19,8 +19,9 @@ export default class ZoomModule{
             }
         });
     }
+
     render(){
-        window['zoom'] = this;
+        window['bpmnZoom'] = this;
         let zoomPart = document.createElement("div");
         zoomPart.classList.add("zoom-part-container");
         zoomPart.style.marginTop = "-100px";
@@ -107,7 +108,7 @@ export default class ZoomModule{
     }
     exitFullScreen(e) {
         var _a;
-        let zoom = window["zoom"];
+        let zoom = window["bpmnZoom"];
         if (zoom.bypassfullscreenChanged) {
             zoom.bypassfullscreenChanged = false;
             return;

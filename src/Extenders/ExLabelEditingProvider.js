@@ -5,6 +5,7 @@ import { isExpanded } from 'bpmn-js/lib/util/DiUtil';
 import {  assign} from 'min-dash';
 import { isAny } from 'bpmn-js/lib/features/modeling/util/ModelingUtil';
 import { isLabelExternal } from 'bpmn-js/lib/util/LabelUtil';
+import BpmnInteractionEvents from "bpmn-js/lib/features/interaction-events/BpmnInteractionEvents"
 /**
  * Get the editing bounding box based on the element's size and position.
  *
@@ -191,3 +192,32 @@ function isCollapsedSubProcess(element) {
 function isExpandedSubProcess(element) {
   return is(element, 'bpmn:SubProcess') && isExpanded(element);
 }
+
+var LABEL_HEIGHT = 30;
+
+BpmnInteractionEvents.prototype._createParticipantHit = function(element, gfx) {
+
+  // remove existing hits
+  this._interactionEvents.removeHits(gfx);
+
+  // add body hit
+  this._interactionEvents.createBoxHit(gfx, 'no-move', {
+    width: element.width,
+    height: element.height
+  });
+
+  // add outline hit
+  this._interactionEvents.createBoxHit(gfx, 'click-stroke', {
+    width: element.width,
+    height: element.height
+  });
+
+  // add label hit
+  this._interactionEvents.createBoxHit(gfx, 'all', {
+    width: element.height,
+    height: LABEL_HEIGHT
+  });
+
+  // indicate that we created a hit
+  return true;
+};

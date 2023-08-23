@@ -123,7 +123,7 @@ export default class VerticalParticipantRenderer extends BaseRenderer {
       }
     }, options);
 
-    var text = this.textRenderer.createText(label || '123123', options);
+    var text = this.textRenderer.createText(label || 'Actor/Integration', options);
 
     svgClasses(text).add('djs-label');
 
