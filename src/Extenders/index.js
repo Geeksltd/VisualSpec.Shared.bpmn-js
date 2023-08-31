@@ -2,10 +2,11 @@ import VerticalParticipantRenderer from './VerticalParticipantRenderer';
 import ExElementFactory from './ExElementFactory';
 import './ExPaletteProvider';
 import './ExLabelEditingProvider';
-//import ParticipantRule from './ParticipantRule';
+import ExContextPadProvider from './ExContextPadProvider';
 
 export default {
-  __init__: [ 'verticalParticipantRenderer','ExElementFactory'],
+  __init__: [ 'verticalParticipantRenderer','ExElementFactory','ExContextPadProvider'],
   verticalParticipantRenderer: [ 'type', VerticalParticipantRenderer ],
-  ExElementFactory: [ 'type', ExElementFactory ]
+  ExElementFactory: [ 'type', ExElementFactory ],
+  ExContextPadProvider: [ 'type', ExContextPadProvider ]
 };

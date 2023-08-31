@@ -61,6 +61,10 @@
   left: 140px;
 }
 
+.djs-palette-entries .group .bpmn-icon-participant{
+  transform : translateX(3px) rotate(90deg);
+}
+
 .bjs-breadcrumbs li {
   display: inline-flex;
   padding-bottom: 5px;

@@ -1,51 +1,75 @@
 
 export default class BpmnZoomModule{
-    constructor(modeler,container,callBack){
+    constructor(modeler,eventBus,container,callBack,persistStateName,fullScreenElementSelector){
         this.modeler = modeler;
         this.zoomScroll = this.modeler.get('zoomScroll');
         this.container = container;
         this.callBack = callBack;
         this.bypassfullscreenChanged = false;
+        this.persistStateName = persistStateName;
+        this.stepZoom = 1;
+        this.eventBus = eventBus;
+        this.fullScreenElementSelector = fullScreenElementSelector;
           // Create an observer instance
           this.observer = new MutationObserver((mutationsList, observer) => {
             var _a;
             for (const mutation of mutationsList) {
                 if (mutation.type === 'childList') {
                     var elem = mutation.addedNodes[0];
-                    if (elem === null || elem === void 0 ? void 0 : elem.id.includes('alertify')) {
-                        (_a = $(this.container)) === null || _a === void 0 ? void 0 : _a.appendChild(elem);
+                    if (elem) {
+                        if (elem.id.includes('alertify') || elem.classList.contains('wait-screen')) {
+                            (_a = $(this.fullScreenElementSelector)) === null || _a === void 0 ? void 0 : _a.append(elem);
+                        }
                     }
                 }
             }
         });
     }
 
-    render(){
+    Render(){
         window['bpmnZoom'] = this;
+        this.canvas = this.modeler.get("canvas");
+        if (this.persistStateName)
+        {
+            var _self = this;
+            this.eventBus.on("canvas.viewbox.changed",f=>{
+                const zoomModule =  window["bpmnZoom"];
+                const currentZoom = zoomModule.canvas.zoom();
+                if (currentZoom != zoomModule.stepZoom)
+                {
+                    zoomModule.stepZoom = currentZoom ;
+                    localStorage.setItem(zoomModule.persistStateName,zoomModule.stepZoom);
+                }
+            });
+        }
+
         let zoomPart = document.createElement("div");
         zoomPart.classList.add("zoom-part-container");
-        zoomPart.style.marginTop = "-100px";
+        if (screen.height < 712)
+            zoomPart.style.marginTop = "-100px";
+        else 
+            zoomPart.style.marginTop = "-120px";
         this.generateSetCentral(zoomPart);
         this.generateZoomIn(zoomPart);
         this.generateZoomOut(zoomPart);
         this.generateReset(zoomPart);
+        zoomPart.style.zIndex = 9998;
+        zoomPart.style.position = "relative";
         this.container.appendChild(zoomPart);
     }
-
-
     generateZoomIn(container) {
         const _self = this;
         let zoomInBtn = this.generateBtn("zoom-in-btn");
         zoomInBtn.setAttribute('title', 'zoom in');
         zoomInBtn.addEventListener("click", e => 
-        _self.zoomScroll.stepZoom(1));
+        _self.changeZoomStep(1));
         container.appendChild(zoomInBtn);
     }
     generateZoomOut(container) {
         const _self = this;
         let zoomInBtn = this.generateBtn("zoom-out-btn");
         zoomInBtn.setAttribute('title', 'zoom out');
-        zoomInBtn.addEventListener("click", e =>  _self.zoomScroll.stepZoom(-1));
+        zoomInBtn.addEventListener("click", e =>  _self.changeZoomStep(-1));
         container.appendChild(zoomInBtn);
     }
     generateSetCentral(container) {
@@ -59,7 +83,7 @@ export default class BpmnZoomModule{
         const _self = this;
         let zoomInBtn = this.generateBtn("zoom-reset-btn");
         zoomInBtn.setAttribute('title', 'reset');
-        zoomInBtn.addEventListener("click", e =>  _self.zoomScroll.reset());
+        zoomInBtn.addEventListener("click", e =>  _self.changeZoomStep(0));
         container.appendChild(zoomInBtn);
     }
     generateBtn(cssClass) {
@@ -129,5 +153,40 @@ export default class BpmnZoomModule{
     InvokeCallback(zoom, fullScreenChanged = false) {
         if (zoom.CallBack)
             zoom.CallBack(zoom.currentState.ZoomLevel, fullScreenChanged);
+    }
+    changeZoomStep(step){
+        if (step == 0)
+        {
+            this.zoomScroll.reset();
+            localStorage.removeItem(this.persistStateName);
+        }
+        else{
+            this.zoomScroll.stepZoom(step);
+            this.stepZoom = this.canvas.zoom();
+            localStorage.setItem("zoomStep"+this.persistStateName,this.stepZoom);
+        }
+    }
+    SetDefaultZoom() {
+       this.stepZoom = localStorage.getItem("zoomStep"+ this.persistStateName);
+       if (this.stepZoom)
+            this.canvas.zoom(this.stepZoom);
+       else
+            this.stepZoom = 1;
+    }
+    InvestigateDialog() {
+        var _a, _b;
+        if (!this.IsFullScreen)
+            return;
+        let modalElement = $(".modal.show");
+        if (modalElement) {
+            let fullScreenElement = $(this.fullScreenElementSelector);
+            fullScreenElement === null || fullScreenElement === void 0 ? void 0 : fullScreenElement.append(modalElement);
+            fullScreenElement === null || fullScreenElement === void 0 ? void 0 : fullScreenElement.append($(".modal-backdrop.show"));
+            (_b = (_a = modalElement[0]) === null || _a === void 0 ? void 0 : _a.querySelector(".modal-dialog")) === null || _b === void 0 ? void 0 : _b.classList.add("modal-dialog-centered");
+            let alertElement = $("#alertify");
+            if (alertElement.length > 0) {
+                fullScreenElement === null || fullScreenElement === void 0 ? void 0 : fullScreenElement.append(alertElement);
+            }
+        }
     }
 }

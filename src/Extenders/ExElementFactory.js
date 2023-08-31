@@ -7,7 +7,7 @@ class ExElementFactory extends ElementFactory {
       const backup_getDefaultSize = elementFactory.getDefaultSize;
       elementFactory.getDefaultSize = (element, di) => {
           if (is(element, 'bpmn:Participant')) {
-              return { width: 450, height: 600};
+              return { width: 350, height: 450};
           }
           return backup_getDefaultSize(element, di);
       }
