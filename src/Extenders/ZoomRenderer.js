@@ -10,6 +10,7 @@ export default class BpmnZoomModule{
         this.stepZoom = 1;
         this.eventBus = eventBus;
         this.fullScreenElementSelector = fullScreenElementSelector;
+        this.currentDim = new DiagramDimenssion(0,0);
           // Create an observer instance
           this.observer = new MutationObserver((mutationsList, observer) => {
             var _a;
@@ -38,7 +39,15 @@ export default class BpmnZoomModule{
                 if (currentZoom != zoomModule.stepZoom)
                 {
                     zoomModule.stepZoom = currentZoom ;
-                    localStorage.setItem(zoomModule.persistStateName,zoomModule.stepZoom);
+                    localStorage.setItem( zoomModule.persistStateName+"_zoom",zoomModule.stepZoom);
+                }
+                else if (f.viewbox.x != zoomModule.currentDim.X || f.viewbox.x != zoomModule.currentDim.Y)
+                {
+                    zoomModule.currentDim.X = f.viewbox.x;
+                    zoomModule.currentDim.Y = f.viewbox.y;
+                    zoomModule.currentDim.Width = f.viewbox.width;
+                    zoomModule.currentDim.Height = f.viewbox.height;
+                    localStorage.setItem( zoomModule.persistStateName+"_dim",zoomModule.currentDim.ToString());
                 }
             });
         }
@@ -46,9 +55,9 @@ export default class BpmnZoomModule{
         let zoomPart = document.createElement("div");
         zoomPart.classList.add("zoom-part-container");
         if (screen.height < 712)
-            zoomPart.style.marginTop = "-100px";
+            zoomPart.style.marginTop = "-2.5rem";
         else 
-            zoomPart.style.marginTop = "-120px";
+            zoomPart.style.marginTop = "-2.75rem";
         this.generateSetCentral(zoomPart);
         this.generateZoomIn(zoomPart);
         this.generateZoomOut(zoomPart);
@@ -167,11 +176,17 @@ export default class BpmnZoomModule{
         }
     }
     SetDefaultZoom() {
-       this.stepZoom = localStorage.getItem("zoomStep"+ this.persistStateName);
+       this.stepZoom = localStorage.getItem(this.persistStateName + "_zoom");
        if (this.stepZoom)
             this.canvas.zoom(this.stepZoom);
        else
             this.stepZoom = 1;
+        var dim =  localStorage.getItem(this.persistStateName + "_dim");
+        if (dim)
+        {
+            this.currentDim.Parse(dim);
+            this.canvas.viewbox({x:this.currentDim.X,y:this.currentDim.Y,width:this.currentDim.Width,height:this.currentDim.Height});
+        }
     }
     InvestigateDialog() {
         var _a, _b;
@@ -189,4 +204,32 @@ export default class BpmnZoomModule{
             }
         }
     }
+}
+
+class DiagramDimenssion
+{
+    constructor(x,y,width,height)
+    {
+        this.X = x;
+        this.Y = y;
+        this.Width = width;
+        this.height= height;
+    }
+
+    Parse(location)
+    {
+        var dim = location.split(":");
+        if (dim.length != 4)
+            throw new Error("dimenssions is not correct");
+        this.X = Number(dim[0]);
+        this.Y = Number(dim[1]);
+        this.Width = Number(dim[2]);
+        this.Height = Number(dim[3]);
+    }
+
+     ToString()
+     {
+        return `${this.X}:${this.Y}:${this.Width}:${this.Height}`;
+     }
+
 }

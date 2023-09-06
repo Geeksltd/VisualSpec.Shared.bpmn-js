@@ -1,6 +1,5 @@
 import BpmnModeler from 'bpmn-js/lib/Modeler';
-import verticalParticipantRendererModule from './Extenders';
-import ExElementFactoryModule from './Extenders';
+import extenders from './Extenders';
 import { is } from 'bpmn-js/lib/util/ModelUtil';
 import BpmnZoomModule from './Extenders/ZoomRenderer';
 
@@ -9,12 +8,11 @@ export default class vsbpmn{
     constructor(element,persistStateName,fullScreenElementSelector){
         this.modeler = new BpmnModeler({
             container: element,
-            // keyboard: {
-            //   bindTo: window
-            // },
+            keyboard: {
+              bindTo: window
+            },
             additionalModules: [
-              verticalParticipantRendererModule,
-              ExElementFactoryModule
+              extenders
             ]
           });
           this.eventBus = this.modeler.get("eventBus");
