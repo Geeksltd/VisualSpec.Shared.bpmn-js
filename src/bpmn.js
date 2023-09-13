@@ -11,6 +11,7 @@ export default class vsbpmn{
             keyboard: {
               bindTo: window
             },
+            taskResizingEnabled: true,
             additionalModules: [
               extenders
             ]
