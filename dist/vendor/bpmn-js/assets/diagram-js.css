@@ -384,8 +384,8 @@ marker.djs-dragger tspan {
 
 .djs-palette {
   position: absolute;
-  left: 2.5rem;
-  top: 1.375rem;
+  left: 1.5rem;
+  top: 0.5rem;
 
   box-sizing: border-box;
   width: 4rem;
@@ -457,7 +457,7 @@ marker.djs-dragger tspan {
  * changed life-cycle are available in addition.
  */
 .djs-palette.two-column.open {
-  width: 94px;
+  width: 5.875rem;
 }
 
 .djs-palette:not(.open) .djs-palette-entries {

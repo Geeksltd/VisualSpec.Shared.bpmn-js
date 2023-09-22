@@ -1,6 +1,6 @@
 {
   "name": "@Geeksltd/visualspec.shared.bpmn-js",
-  "version": "1.1.2",
+  "version": "1.1.3",
   "description": "bpmn-js module to create bpmn 2 diagram",
   "private": false,
   "scripts": {
