@@ -167,12 +167,12 @@ export default class BpmnZoomModule{
         if (step == 0)
         {
             this.zoomScroll.reset();
-            localStorage.removeItem(this.persistStateName);
+            localStorage.removeItem(this.persistStateName+"_zoom");
         }
         else{
             this.zoomScroll.stepZoom(step);
             this.stepZoom = this.canvas.zoom();
-            localStorage.setItem("zoomStep"+this.persistStateName,this.stepZoom);
+            localStorage.setItem(this.persistStateName+"_zoom",this.stepZoom);
         }
     }
     SetDefaultZoom() {
@@ -186,6 +186,7 @@ export default class BpmnZoomModule{
         {
             this.currentDim.Parse(dim);
             this.canvas.viewbox({x:this.currentDim.X,y:this.currentDim.Y,width:this.currentDim.Width,height:this.currentDim.Height});
+            this.set
         }
     }
     InvestigateDialog() {

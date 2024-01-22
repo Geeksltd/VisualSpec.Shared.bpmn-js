@@ -4,7 +4,7 @@ import LabelEditingProvider from 'bpmn-js/lib/features/label-editing/LabelEditin
 import { isExpanded } from 'bpmn-js/lib/util/DiUtil';
 import {  assign} from 'min-dash';
 import { isAny } from 'bpmn-js/lib/features/modeling/util/ModelingUtil';
-import { isLabelExternal,hasExternalLabel,isLabel,getExternalLabelMid } from 'bpmn-js/lib/util/LabelUtil';
+import { isLabelExternal,hasExternalLabel,getExternalLabelMid } from 'bpmn-js/lib/util/LabelUtil';
 import BpmnInteractionEvents from "bpmn-js/lib/features/interaction-events/BpmnInteractionEvents"
 /**
  * Get the editing bounding box based on the element's size and position.

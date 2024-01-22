@@ -1,7 +1,7 @@
 import BpmnModeler from 'bpmn-js/lib/Modeler';
 import extenders from './Extenders';
 import { is } from 'bpmn-js/lib/util/ModelUtil';
-import BpmnZoomModule from './Extenders/ZoomRenderer';
+import BpmnZoomModule from './Extenders/BpmnZoomModule';
 
 export default class vsbpmn{
  
@@ -9,7 +9,7 @@ export default class vsbpmn{
         this.modeler = new BpmnModeler({
             container: element,
             keyboard: {
-              bindTo: window
+              bindTo: document
             },
             taskResizingEnabled: true,
             additionalModules: [
@@ -22,10 +22,26 @@ export default class vsbpmn{
           this.zoomModule = new BpmnZoomModule(this.modeler,this.eventBus,element,null,persistStateName,fullScreenElementSelector);
           this.zoomModule.Render();
           this.elementRegistry = this.modeler.get("elementRegistry");
+          if (!vsbpmn._isFirstTime)
+          {
+            this.commandStack = this.modeler.get("commandStack");
+            let _self = this;
+            document.addEventListener("keydown",e=>
+            {
+                  if (e.ctrlKey)
+                  {
+                    if (e.key == "z" || e.key =="Z")
+                    _self.commandStack.undo();
+                    else if (e.key == "y" || e.key == "Y")
+                    _self.commandStack.redo();
+                  }
+            });
+          }
     }
 
     loadXml = async function(xmlData){
       const _self = this;
+      vsbpmn._isFirstTime = false;
       if (!xmlData)
         throw new Error("xmlData cannot be null");
      return this.modeler.importXML(xmlData).catch((err) => {
@@ -69,3 +85,4 @@ export default class vsbpmn{
       }
     }
 }
+vsbpmn._isFirstTime = true;
