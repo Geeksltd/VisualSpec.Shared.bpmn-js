@@ -6,8 +6,9 @@ import BpmnZoomModule from './Extenders/BpmnZoomModule';
 export default class vsbpmn{
  
     constructor(element,persistStateName,fullScreenElementSelector){
+      //if (!vsbpmn.modeler)
         this.modeler = new BpmnModeler({
-            container: element,
+            container: '#'+element,
             keyboard: {
               bindTo: document
             },
@@ -19,10 +20,10 @@ export default class vsbpmn{
           this.eventBus = this.modeler.get("eventBus");
           this.elementFactory = this.modeler.get("elementFactory");
           this.modeling = this.modeler.get("modeling");
-          this.zoomModule = new BpmnZoomModule(this.modeler,this.eventBus,element,null,persistStateName,fullScreenElementSelector);
+          this.zoomModule = new BpmnZoomModule(this.modeler,this.eventBus,document.getElementById(element),null,persistStateName,fullScreenElementSelector);
           this.zoomModule.Render();
           this.elementRegistry = this.modeler.get("elementRegistry");
-          if (!vsbpmn._isFirstTime)
+          if (!this._isFirstTime)
           {
             this.commandStack = this.modeler.get("commandStack");
             let _self = this;
@@ -41,15 +42,16 @@ export default class vsbpmn{
 
     loadXml = async function(xmlData){
       const _self = this;
-      vsbpmn._isFirstTime = false;
+      this._isFirstTime = false;
       if (!xmlData)
         throw new Error("xmlData cannot be null");
      return this.modeler.importXML(xmlData).catch((err) => {
       if (err) {
         console.error(err);
       }
-      }).then(()=>
-       _self.zoomModule.SetDefaultZoom());
+      })
+      // .then(()=>
+      //  _self.zoomModule.SetDefaultZoom());
     }
 
     createWorkflowModelParticipant = function(title,actorID,integrationID)

@@ -186,7 +186,6 @@ export default class BpmnZoomModule{
         {
             this.currentDim.Parse(dim);
             this.canvas.viewbox({x:this.currentDim.X,y:this.currentDim.Y,width:this.currentDim.Width,height:this.currentDim.Height});
-            this.set
         }
     }
     InvestigateDialog() {
