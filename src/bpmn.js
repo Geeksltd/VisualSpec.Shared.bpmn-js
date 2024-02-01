@@ -7,6 +7,7 @@ export default class vsbpmn{
  
     constructor(element,persistStateName,fullScreenElementSelector){
       //if (!vsbpmn.modeler)
+      let a = extenders;
         this.modeler = new BpmnModeler({
             container: '#'+element,
             keyboard: {

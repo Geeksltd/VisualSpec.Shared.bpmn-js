@@ -1,55 +1,46 @@
 import diagramXML from './resources/testDiagram.bpmn';
 import diagramXML2 from './resources/diagram.bpmn';
 import vsbpmn from '../src/bpmn';
+import vsbpmnViewer from '../src/bpmnViewer';
 
 //var container = document.getElementById('js-canvas');
-
-var bpmnViewer = new vsbpmn('js-canvas',"testPersist");
-window["bpmnViewer"] = bpmnViewer;
-
-
-bpmnViewer.loadXml(diagramXML).then(()=> {
-    //bpmnViewer.createWorkflowModelParticipant("test",1,9);
+var bpmn = new vsbpmn('js-canvas',"testPersist");
+window["bpmn"] = bpmn;
+bpmn.loadXml(diagramXML).then(()=> {
+    //bpmn.createWorkflowModelParticipant("test",1,9);
 } );
 
-bpmnViewer.eventBus.on("commandStack.elements.create.canExecute",99999,e=> {return true});
+bpmn.eventBus.on("commandStack.elements.create.canExecute",99999,e=> {return true});
 
 let _self = this;
-bpmnViewer.eventBus.on(["shape.added","shape.removed","shape.changed","hand.init"],f=>{
+bpmn.eventBus.on(["shape.added","shape.removed","shape.changed","hand.init"],f=>{
     console.log(f.type + " raised");
     setTimeout(async ()=> {
-    let result = await bpmnViewer.modeler.saveXML({format:true});
+    let result = await bpmn.modeler.saveXML({format:true});
     let {xml} = result;
     console.log(xml);
 },3000);
 });
 window["rerender"] = function rerender()
 {
-    //bpmnViewer.dispose();
-    //bpmnViewer = new vsbpmn(container,"testPersist");
     var parent = document.getElementById('js-canvas').parentElement;
     parent.innerHTML = '';
     let newElement = document.createElement("div");
     newElement.id = 'js-canvas';
     parent.appendChild(newElement)
-    bpmnViewer = new vsbpmn('js-canvas',"testPersist");
-    window["bpmnViewer"] = bpmnViewer;
+    bpmn = new vsbpmn('js-canvas',"testPersist");
+    window["bpmn"] = bpmn;
 
-    bpmnViewer.eventBus.on("commandStack.elements.create.canExecute",99999,e=> {return true});
+    bpmn.eventBus.on("commandStack.elements.create.canExecute",99999,e=> {return true});
 
-    bpmnViewer.loadXml(diagramXML2).then(()=> {
+    bpmn.loadXml(diagramXML2).then(()=> {
         
     } );
 
-    // let _self = this;
-    // bpmnViewer.eventBus.on(["shape.added","shape.removed","shape.changed","hand.init"],f=>{
-    //     console.log(f.type + " raised");
-    //     setTimeout(async ()=> {
-    //     let result = await bpmnViewer.modeler.saveXML({format:true});
-    //     let {xml} = result;
-    //     console.log(xml);
-    // },3000);
-    // });
-    
     console.log("rerendered");
 }
+
+var bpmnViewer = new vsbpmnViewer('js-canvasReadonly',"testPersist_readonly");
+bpmnViewer.loadXml(diagramXML).then(()=> {
+    //bpmn.createWorkflowModelParticipant("test",1,9);
+} );

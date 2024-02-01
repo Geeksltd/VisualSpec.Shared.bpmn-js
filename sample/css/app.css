@@ -17,13 +17,16 @@ a:link {
   text-decoration: none;
 }
 
-.content,
 .content > div {
   width: 100%;
   height: 100%;
   overflow: hidden;
 }
-
+.content{
+  width: 100%;
+  height: 100%;
+  overflow-y: auto;
+}
 .content > .message {
   text-align: center;
   display: table;
