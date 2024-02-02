@@ -1,7 +1,8 @@
 import diagramXML from './resources/testDiagram.bpmn';
 import diagramXML2 from './resources/diagram.bpmn';
-import vsbpmn from '../src/bpmn';
-import vsbpmnViewer from '../src/bpmnViewer';
+// import vsbpmn from '../src/vsbpmn';
+// import vsbpmnViewer from '../src/vsbpmnViewer';
+import {vsbpmn,vsbpmnViewer} from '../src/index';
 
 //var container = document.getElementById('js-canvas');
 var bpmn = new vsbpmn('js-canvas',"testPersist");

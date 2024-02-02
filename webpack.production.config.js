@@ -3,7 +3,7 @@ const CopyWebpackPlugin = require('copy-webpack-plugin');
 
 module.exports = {
     entry: {
-        bundle: [ './src/bpmn.js','./src/bpmnViewer.js' ]
+        bundle: [ './src/index.js' ]
       },
     output: {
         path: path.join(__dirname, 'dist'),

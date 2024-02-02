@@ -4,7 +4,7 @@ import BpmnViewer from 'bpmn-js';
 import zoomScroll from 'diagram-js/lib/navigation/zoomscroll';
 import MoveCanvas from 'diagram-js/lib/navigation/movecanvas';
 
-export default class vsbpmn{
+export default class vsbpmnViewer{
  
     constructor(element,persistStateName,fullScreenElementSelector){
       //if (!vsbpmn.modeler)

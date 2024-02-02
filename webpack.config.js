@@ -7,7 +7,9 @@ module.exports = {
       },
     output: {
         path: __dirname + '/public',
-        filename: 'app.js',
+        filename:'app.js',
+        // library: "bpmn",
+        //  libraryTarget: "umd"
       },
   module: {
     rules: [{
@@ -21,7 +23,7 @@ module.exports = {
       { from: '**/*.{html,css}', context: 'sample/' }
     ])
   ],
-  mode: 'development',
+  mode: 'production',
   devtool: 'inline-source-map',
   devServer: {
   },
