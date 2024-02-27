@@ -51,8 +51,8 @@ export default class vsbpmn{
         console.error(err);
       }
       })
-      // .then(()=>
-      //  _self.zoomModule.SetDefaultZoom());
+       .then(()=>
+        _self.zoomModule.SetDefaultZoom());
     }
 
     createWorkflowModelParticipant = function(title,actorID,integrationID)

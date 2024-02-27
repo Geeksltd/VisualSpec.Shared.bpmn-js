@@ -167,7 +167,9 @@ export default class BpmnZoomModule{
         if (step == 0)
         {
             this.zoomScroll.reset();
+            this.canvas.zoom('fit-viewport','auto');
             localStorage.removeItem(this.persistStateName+"_zoom");
+            localStorage.removeItem(this.persistStateName + "_dim");
         }
         else{
             this.zoomScroll.stepZoom(step);
@@ -187,6 +189,8 @@ export default class BpmnZoomModule{
             this.currentDim.Parse(dim);
             this.canvas.viewbox({x:this.currentDim.X,y:this.currentDim.Y,width:this.currentDim.Width,height:this.currentDim.Height});
         }
+        else 
+            this.canvas.zoom('fit-viewport','auto');
     }
     InvestigateDialog() {
         var _a, _b;
