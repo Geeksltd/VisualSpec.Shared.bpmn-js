@@ -1,5 +1,6 @@
 import diagramXML from './resources/testDiagram.bpmn';
 import diagramXML2 from './resources/diagram.bpmn';
+import verticaldiagramXML from './resources/vertiacallanediagram.bpmn';
 // import vsbpmn from '../src/vsbpmn';
 // import vsbpmnViewer from '../src/vsbpmnViewer';
 import {vsbpmn,vsbpmnViewer} from '../src/index';
@@ -42,6 +43,6 @@ window["rerender"] = function rerender()
 }
 
 var bpmnViewer = new vsbpmnViewer('js-canvasReadonly',"testPersist_readonly");
-bpmnViewer.loadXml(diagramXML).then(()=> {
+bpmnViewer.loadXml(verticaldiagramXML).then(()=> {
     //bpmn.createWorkflowModelParticipant("test",1,9);
 } );

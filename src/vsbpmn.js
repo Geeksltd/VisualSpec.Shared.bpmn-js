@@ -24,26 +24,10 @@ export default class vsbpmn{
           this.zoomModule = new BpmnZoomModule(this.modeler,this.eventBus,document.getElementById(element),null,persistStateName,fullScreenElementSelector);
           this.zoomModule.Render();
           this.elementRegistry = this.modeler.get("elementRegistry");
-          if (!this._isFirstTime)
-          {
-            this.commandStack = this.modeler.get("commandStack");
-            let _self = this;
-            document.addEventListener("keydown",e=>
-            {
-                  if (e.ctrlKey)
-                  {
-                    if (e.key == "z" || e.key =="Z")
-                    _self.commandStack.undo();
-                    else if (e.key == "y" || e.key == "Y")
-                    _self.commandStack.redo();
-                  }
-            });
-          }
     }
 
     loadXml = async function(xmlData){
       const _self = this;
-      this._isFirstTime = false;
       if (!xmlData)
         throw new Error("xmlData cannot be null");
      return this.modeler.importXML(xmlData).catch((err) => {
@@ -70,8 +54,8 @@ export default class vsbpmn{
             process = allProcesses[0];
         }
         let bounds = this.getBounds();
-        const participant = this.elementFactory.createParticipantShape({ type: 'bpmn:Participant' });
-        let shape = this.modeling.createShape(participant, { x: bounds[0], y: bounds[1] }, process ? process : colaborations[0]);
+        const participant = this.elementFactory.createParticipantShape({ type: 'bpmn:Participant',isHorizontal : false });
+        this.modeling.createShape(participant, { x: bounds[0], y: bounds[1] }, process ? process : colaborations[0]);
         this.modeling.updateProperties(participant,{name: title});
         if (actorID)
           this.modeling.updateProperties(participant,{actorID: actorID});
@@ -88,4 +72,3 @@ export default class vsbpmn{
       }
     }
 }
-vsbpmn._isFirstTime = true;
